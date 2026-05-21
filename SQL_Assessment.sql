@@ -1,7 +1,6 @@
---Business Context
---One of our clients runs an iGaming website. They’d like to focus on the spend and retention of new
---users. There has been some predictive modeling work done on this, but further analysis and
---dashboarding is necessary.
+-- About the data:
+-- 1. Composite key: user_id + period + fs_date
+-- Few users have been acquired multiple times through different acquisition channels (they have different fs_date but same user_id)
 
 --The below SQL codes are in TRINO syntax
 
