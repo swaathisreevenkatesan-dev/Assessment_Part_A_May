@@ -1,13 +1,18 @@
+# Importing necessary libraries
 import numpy as np
 import pandas as pd
 from sklearn.metrics import f1_score, precision_recall_curve, roc_curve
 from sklearn.metrics import precision_score, recall_score
 
+#Reading the data from csv file
 df = pd.read_csv("analysis_data_may.csv")
 
+# Trying to understand if the data is imblanced or balanced
 result = df.groupby("stayed_active_180d").size()
 result
 
+# as the class is imbalanced, F1 score evaluation is the better metric to use. 
+# In simple words, the point where recall and precision curve intersects gives the optimum threshold to split active from non active
 def generate_threshold_table(csv_filepath):
     # 1. Load the dataset
     df = pd.read_csv(csv_filepath)
