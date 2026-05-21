@@ -3,6 +3,8 @@
 --users. There has been some predictive modeling work done on this, but further analysis and
 --dashboarding is necessary.
 
+--The below SQL codes are in TRINO syntax
+
 --SQL Queries
 --Whats the primary key of the table?
 select count(*), count(distinct CONCAT(CONCAT(user_id, period),cast(fs_date as varchar)))
@@ -112,7 +114,7 @@ from cte;
 -- This is the level of data - user_id, period, fs_date
 
 
-
+-- 7 th day retention and Day 7 retention at overall level
 select round((cast(count(distinct case when cast(period as date)>fs_date and cast(period as date)<=fs_date + interval '7' day then a.user_id end) as double) / cast(count(distinct a.user_id ) as double))*100,4) as days_retention_7,
 round((cast(count(distinct case when cast(period as date)>fs_date and cast(period as date)=fs_date + interval '7' day then a.user_id end) as double) / cast(count(distinct a.user_id ) as double))*100,4) as day_7th_retention
 from (select  user_id, fs_date
@@ -122,7 +124,7 @@ left join (select user_id, period
 from reporting_batch.swaathi_test_data
 group by 1,2) b on a.user_id=b.user_id;
 
-
+--   7 th day retention and Day 7 retention at overall level at month level
 select date_trunc('month',fs_date) as fs_date,
 round((cast(count(distinct case when cast(period as date)>fs_date and cast(period as date)<=fs_date + interval '7' day then a.user_id end) as double) / cast(count(distinct a.user_id ) as double))*100,4) as days_retention_7,
 round((cast(count(distinct case when cast(period as date)>fs_date and cast(period as date)=fs_date + interval '7' day then a.user_id end) as double) / cast(count(distinct a.user_id ) as double))*100,4) as day_7th_retention
